@@ -1,0 +1,49 @@
+
+	import java.util.*;
+	
+	class kho {
+        HashMap<String , Integer > tensl = new HashMap<>();
+        HashMap<String , Integer> tengia = new HashMap<>();
+        
+        public void themsp( String ten , int gia , int  sl ){
+            tensl.put( ten , sl );
+            tengia.put( ten  , gia );
+        }
+        
+        public int insl( String ten){
+            return tensl.getOrDefault( ten , 0 );
+        }
+        public int ingia( String ten ){
+            return tengia.getOrDefault( ten  , -99  );
+        }
+        
+        public boolean layra( String ten ){
+            if( tensl.containsKey( ten ) && tensl.get( ten ) >0  ){
+                tensl.put( ten , tensl.get( ten ) - 1  );
+                return true;
+            }
+            return false ;
+        }
+        
+        public void inten(){
+            for( String key : tensl.keySet() ){
+                if( tensl.get(key) > 0 )
+                    System.out.println( key );
+            }
+        }
+        
+    }
+	public class Main{
+        public static void main(String[] args){
+            kho a = new kho();
+            a.themsp( "milk" , 3,10  );
+            a.themsp( "coffee" , 5,6 );
+            a.themsp( "buttermilk" , 2 , 1);
+            a.themsp( "yogurt"  , 2 ,20);
+            a.layra( "buttermilk" );
+            a.layra( "milk" );
+            a.layra( "buttermilk" );
+            a.inten();
+          
+        }
+    }
