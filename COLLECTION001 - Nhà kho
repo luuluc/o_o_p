@@ -1,0 +1,30 @@
+
+	import java.util.*;
+	
+	class kho{
+        HashMap<String , Integer > tensl  = new HashMap<>();
+        HashMap<  String , Integer  > tengia = new HashMap<>();
+        public void themsp( String ten , int gia , int sl ){
+            tensl.put( ten , sl );
+            tengia.put( ten  , gia);            
+        }       
+        public int insl( String ten ){
+            
+            return tensl.getOrDefault( ten  , 0 );            
+        }   
+        public int ingia( String ten ){
+            
+            return tengia.getOrDefault( ten , -99);
+        }       
+    }
+		public class Main{
+            public static void main(String[] args){
+                kho a = new kho();
+                a.themsp( "milk" , 3 ,10 );
+                a.themsp( "coffee" , 5 , 7  );
+                System.out.println("prices:"  );
+                System.out.println( "milk: " + a.ingia("milk" ) );
+                System.out.println( "coffee: " + a.ingia("coffee" ) );
+                System.out.println( "sugar: " + a.ingia("sugar" ) );
+            }
+        } 
