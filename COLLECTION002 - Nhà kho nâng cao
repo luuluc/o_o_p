@@ -1,0 +1,43 @@
+
+	import java.util.*;
+	
+	class kho{
+        HashMap<String , Integer > tensl  = new HashMap<>();
+        HashMap<  String , Integer  > tengia = new HashMap<>();
+        public void themsp( String ten , int gia , int sl ){
+            tensl.put( ten , sl );
+            tengia.put( ten  , gia);            
+        }       
+        public int insl( String ten ){
+            
+            return tensl.getOrDefault( ten  , 0 );            
+        }   
+        public int ingia( String ten ){
+            
+            return tengia.getOrDefault( ten , -99);
+        }
+        
+        public boolean laysp( String ten ){
+            if( tensl.containsKey( ten ) && tensl.get( ten ) > 0  ){
+                tensl.put( ten , tensl.get(ten) - 1  );
+                return true;
+            }
+            return false ;
+        }
+    }
+		public class Main{
+            public static void main(String[] args){
+                kho a = new kho();
+              
+                a.themsp( "coffee" , 5 , 1  );
+                System.out.println("stock:"  );
+                System.out.println( "coffee:  " + a.insl("coffee" ) );
+                System.out.println( "sugar: " + a.insl("sugar" ) );
+                System.out.println( "taking coffee " + a.laysp("coffee" ) );
+                System.out.println( "taking coffee " + a.laysp("coffee" ) );
+                System.out.println( "taking sugar " + a.laysp("sugar" ) );
+                System.out.println("stock:"  );
+                System.out.println( "coffee:  " + a.insl("coffee" ) );
+                System.out.println( "sugar: " + a.insl("sugar" ) );
+            }
+        } 
