@@ -1,0 +1,32 @@
+
+
+	import java .util.*;
+	
+	public class Main{
+        public static void main(String[] args){
+            Scanner ip = new Scanner(System.in);
+            int t = ip.nextInt();
+            ip.nextLine();
+            while( t--> 0  ){
+                String s = ip.nextLine();
+                String a[] = s.split(" ");
+                int sum  = 0;
+                for( int  i = 2 ; i< a.length-1 ; i++ ){
+                    if( a[i-2].equals(a[i] ) ){
+                        int x = Integer.parseInt(a[i-1]);
+                            int y = Integer.parseInt(a[i+1]);
+                        sum = x + y;
+                       
+                    }
+                    else
+                       sum = 0 ;
+                        
+                    
+                }
+                if( sum != 0 )
+                System.out.println(sum);
+                else 
+                     System.out.println("Currency doesn't match");
+            }
+        }
+    }
