@@ -1,0 +1,25 @@
+
+	
+	import java.util.*;
+	
+	public class Main{
+        public static void main(String[]  args ){
+            Scanner ip = new Scanner(System.in);
+            int t = ip.nextInt();
+            ip.nextLine();
+            while( t--> 0  ){
+                String s = ip.nextLine();
+                String a[] = s.split("\\.");
+                if( a[a.length-1].equals("") )
+                     System.out.println("Not java file exception.Mark is -1");
+               
+                
+               else  if( a[a.length-1].equals("java")){
+                    System.out.println("1");
+               }
+                else 
+                    System.out.println("0");
+               
+            }
+        } 
+     }   
