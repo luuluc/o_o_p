@@ -1,0 +1,76 @@
+import java.util.*;
+
+// Custom Exception for UsedCar
+class UsedCarException extends Exception {
+    public UsedCarException(String vin) {
+        super("Invalid UsedCar: VIN " + vin);
+    }
+}
+
+// UsedCar class
+class UsedCar {
+    private String vin, make;
+    private int year, mileage;
+    private double price;
+    
+    public UsedCar(String vin, String make, int year, int mileage, double price) throws UsedCarException {
+        if (vin.length() != 4 || !vin.matches("\\d{4}")) {
+            throw new UsedCarException(vin);
+        }
+        if (!Arrays.asList("Ford", "Honda", "Toyota", "Chrysler").contains(make)) {
+            throw new UsedCarException(vin);
+        }
+        if (year < 1990 || year > 2014) {
+            throw new UsedCarException(vin);
+        }
+        if (mileage < 0 || price < 0) {
+            throw new UsedCarException(vin);
+        }
+        
+        this.vin = vin;
+        this.make = make;
+        this.year = year;
+        this.mileage = mileage;
+        this.price = price;
+    }
+    
+    @Override
+    public String toString() {
+        return String.format("UsedCar{vin='%s', make='%s', year=%d, mileage=%d, price=%.1f}", 
+                             vin, make, year, mileage, price);
+    }
+}
+
+// Main class
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int testCases = Integer.parseInt(scanner.nextLine());
+        List<UsedCar> validCars = new ArrayList<>();
+        
+        for (int i = 0; i < testCases; i++) {
+            String[] input = scanner.nextLine().split(",");
+            String vin = input[0];
+            String make = input[1];
+            int year = Integer.parseInt(input[2]);
+            int mileage = Integer.parseInt(input[3]);
+            double price = Double.parseDouble(input[4]);
+            
+            try {
+                UsedCar car = new UsedCar(vin, make, year, mileage, price);
+                validCars.add(car);
+            } catch (UsedCarException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        
+        System.out.println("List of successfully constructed UsedCar objects:");
+        if (validCars.isEmpty()) {
+            System.out.println("No used cars");
+        } else {
+            for (UsedCar car : validCars) {
+                System.out.println(car);
+            }
+        }
+    }
+}
