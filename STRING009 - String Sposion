@@ -1,0 +1,29 @@
+import java.util.Scanner;
+
+public class Main {
+    public static String stringSplosion(String str) {
+        StringBuilder result = new StringBuilder();
+        
+        // Vòng lặp ngoài: độ dài tiền tố từ 1 đến độ dài chuỗi
+        for (int len = 1; len <= str.length(); len++) {
+            // Vòng lặp trong: xây dựng tiền tố có độ dài 'len'
+            for (int i = 0; i < len; i++) {
+                result.append(str.charAt(i));
+            }
+        }
+        
+        return result.toString();
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        scanner.nextLine(); // Đọc bỏ dòng thừa
+        
+        for (int i = 0; i < n; i++) {
+            String input = scanner.nextLine().trim();
+            System.out.println(stringSplosion(input));
+        }
+        scanner.close();
+    }
+}
