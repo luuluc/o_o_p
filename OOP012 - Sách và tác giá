@@ -1,41 +1,105 @@
 
+
 	import java.util.*;
 	
+	class Author{
+        private String name;
+        private String email;
+        private char gender;
+        public Author(String name , String email, char gender ){
+            this.name = name ; 
+            this.email  = email;
+            if( gender == 'f' || gender == 'm' )
+                this.gender = gender ;
+            
+        }
+        public String toString(){
+            return "Author[name=" + this.name + ", email=" + this.email + ", gender=" + this.gender + "]" ;
+        }
+        
+    }
+
 	class Book{
         private String name ; 
-        private Author author ;
-        private double price;
-        private int qty;
-        public Book(String name , Author author , double price ){
+        private Author  author ; 
+        private double price ;
+        private int qty ;
+        public Book ( String name  , Author author , double price   ){
             this.name  = name ; 
             this.author = author ; 
             this.price = price ;
         }
-        public Book(String name , Author author , double price , int qty ){
+        public Book ( String name , Author author , double price , int qty  ){
             this.name = name ; 
-            this.author  = author ; 
-            this.price  = price ;
-            this.qty = qty ;
+            this.author = author ;
+            this.price = price ;
+            this.qty  = qty ;
         }
+        
         public String getName(){
-            return this.name ; 
+            return this.name;
         }
-        public Author  getAthor(){
+        public Author getAuthor(){
             return this.author;
         }
-        public double getPrice(){
-            return price ; 
-        } 
-        public void setPrice( double a  ){
-            this.price = a ;
+        public double  getPrice(){
+            return this.price;
         }
-        public int getQty(){
-            return qty;
+        public void setPrice(double a ){
+            this.price = a;
         }
-        public void setQty(int a ){
-            this.qty = a;
+        public  int getQty(){
+            return this.qty;
         }
+        public void setQty(int a){
+            this.qty = a ;
+        }
+        
         public String toString(){
-            return "Book[name=" + this.name + ", " + "Author[" + this.outhor +  
+        return "Book[name=" + this.name + ", " + author.toString() +  ", " + "price=" + this.price + ", qty=" + this.qty + "]";
         }
-    } 
+        
+        
+    }
+
+
+	public class Main{
+        public static void main(String[] args){
+            Scanner ip  = new Scanner(System.in);
+           int t = ip.nextInt();
+            ip.nextLine(); 
+			while(t--> 0){
+                String a = ip.nextLine();
+                                                      
+                 String a1 = ip.nextLine();
+                  
+                 Double a2 = ip.nextDouble();
+                    
+                 int a3 = ip.nextInt();
+                  ip.nextLine(); 
+     
+
+                String b = ip.nextLine();
+                
+              
+                    String b1 = ip.nextLine();// name
+                     
+                    String b2 = ip.nextLine();//email
+                   
+                    char b3 = ip.next().charAt(0);// gender
+                  
+                  Author au = new Author(b1 , b2 , b3 );
+                  Book book = new Book(a1 , au , a2 , a3 );
+               
+                
+            	String c = ip.nextLine();
+           
+                //if( c.equals("End") ){
+                    System.out.println( book.toString() ); 
+                    continue ; 
+                    
+               // }
+            }  
+        }
+    }
+    
