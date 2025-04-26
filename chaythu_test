@@ -49,7 +49,7 @@
             public Employee getClerk(){
                 return clerk;
             }
-            public String tostring(){
+            public String toString(){
                 StringBuilder s = new StringBuilder();
                 s.append("item:\n");
                for( Item i : recipt )
@@ -63,14 +63,15 @@
 		class DiscountBill extends GroceryBill{
             protected double discountAmount;
             protected Employee clerk ;
-            protected double total ;
-            public DiscountBill(Employee clrek){
+            protected double total  ; 
+           // protected ArrayList<Item> recipt ;
+            public DiscountBill(Employee clerk, double total , double discountAmount  ){
                 super(clerk , total);
                 this.discountAmount = 0 ;
                 
             } 
             public void add(Item i ){
-                clerk.add(i);
+                recipt.add(i);
                 this.total += i.getPrice();
                 this.discountAmount += i.getDiscount();
             }
@@ -80,11 +81,11 @@
               double tong = 0 ;
                 for( Item i : recipt ){
                     s.append("  ").append(i.toString()).append("\n");
-                	tong += i.getPrice() * i.getdiscount() ;
+                	tong += i.getPrice() * i.getDiscount() ;
                     }
-                s.append(Stirngformat("sub-total: $%.2f\n"  , this.total));
-                s.append(Stringformar("discount: $%.2f\n", this.discountAmount ));
-                s.append(Stringformat("total: $%.2f\n" ,this.total - tong  ));
+                s.append(String.format("sub-total: $%.2f\n"  , this.total));
+                s.append(String.format("discount: $%.2f\n", this.discountAmount ));
+                s.append(String.format("total: $%.2f\n" ,this.total - tong  ));
                 s.append("Clerk: ").append(clerk.getName());
                 return s.toString();
             }
@@ -95,18 +96,18 @@
         public static void main(String[] args){
             Employee a = new Employee("GoceryBill");
             GroceryBill a1 = new GroceryBill(a);
-            a1.add("item 1" , 2.3 , 0 );
-            a1.add("item 2" , 3.45  , 0 );
-            a1.toString();
+            a1.add(new Item("item 1" , 2.3 , 0 ) )  ;
+            a1.add(new Item("item 2" , 3.45  , 0 ));
+           System.out.println( a1.toString() );
             
             System.out.println("");
             
             Employee b = new Employee("Discount Bill");
             DiscountBill b1 = new DiscountBill(b);
-            b1.add("item 3" , 20 ,  15 );
-            b1.add("item 4" , 40  , 35);
-            b1.add("item 5", 50 , 35);
-            b1.toString();
+            b1.add(new Item("item 3" , 20 ,  15 );
+            b1.add(new Item("item 4" , 40  , 35));
+            b1.add(new Item("item 5", 50 , 35));
+           System.out.println( b1.toString() ) ; 
          }
     }
 	
