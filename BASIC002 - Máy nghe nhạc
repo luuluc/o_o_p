@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class PlaylistDP {
+public class Main {
     static final int MOD = 1_000_000_007;
 
     public static long numPlaylists(int n, int goal, int k) {
