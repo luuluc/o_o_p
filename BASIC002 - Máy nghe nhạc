@@ -1,0 +1,38 @@
+import java.util.*;
+
+public class PlaylistDP {
+    static final int MOD = 1_000_000_007;
+
+    public static long numPlaylists(int n, int goal, int k) {
+        long[][] dp = new long[goal + 1][n + 1];
+        dp[0][0] = 1;
+
+        for (int i = 1; i <= goal; i++) {
+            for (int j = 1; j <= n; j++) {
+                // Chọn bài mới
+                dp[i][j] += dp[i - 1][j - 1] * (n - (j - 1));
+                dp[i][j] %= MOD;
+
+                // Chọn bài cũ (đã phát), chỉ nếu có nhiều hơn k bài đã phát
+                if (j > k) {
+                    dp[i][j] += dp[i - 1][j] * (j - k);
+                    dp[i][j] %= MOD;
+                }
+            }
+        }
+
+        return dp[goal][n];
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int T = Integer.parseInt(scanner.nextLine());
+
+        while (T-- > 0) {
+            int k = scanner.nextInt();
+            int n = scanner.nextInt();
+            int goal = scanner.nextInt();
+            System.out.println(numPlaylists(n, goal, k));
+        }
+    }
+}
