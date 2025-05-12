@@ -1,0 +1,120 @@
+import java.util.*;
+
+ class Pokemon {
+    private String name;
+    private String element;
+    private int health;
+
+    public Pokemon(String name, String element, int health) {
+        this.name = name;
+        this.element = element;
+        this.health = health;
+    }
+
+    public String getElement() {
+        return element;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void reduceHealth(int amount) {
+        this.health -= amount;
+    }
+
+    public boolean isDead() {
+        return this.health <= 0;
+    }
+}
+
+
+ class Trainer {
+    private String name;
+    private int numberOfBadges;
+    private List<Pokemon> pokemons;
+
+    public Trainer(String name) {
+        this.name = name;
+        this.numberOfBadges = 0;
+        this.pokemons = new ArrayList<>();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getNumberOfBadges() {
+        return numberOfBadges;
+    }
+
+    public List<Pokemon> getPokemons() {
+        return pokemons;
+    }
+
+    public void addPokemon(Pokemon pokemon) {
+        this.pokemons.add(pokemon);
+    }
+
+    public void increaseBadge() {
+        this.numberOfBadges++;
+    }
+
+    public boolean hasPokemonWithElement(String element) {
+        for (Pokemon p : pokemons) {
+            if (p.getElement().equals(element)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void damagePokemons() {
+        for (Pokemon p : pokemons) {
+            p.reduceHealth(10);
+        }
+        pokemons.removeIf(Pokemon::isDead);
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Map<String, Trainer> trainers = new LinkedHashMap<>();
+
+        // Đọc dữ liệu Pokémon và Trainer cho đến "Tournament"
+        String line;
+        while (!(line = scanner.nextLine()).equals("Tournament")) {
+            String[] parts = line.split(" ");
+            String trainerName = parts[0];
+            String pokemonName = parts[1];
+            String pokemonElement = parts[2];
+            int pokemonHealth = Integer.parseInt(parts[3]);
+
+            trainers.putIfAbsent(trainerName, new Trainer(trainerName));
+            trainers.get(trainerName).addPokemon(new Pokemon(pokemonName, pokemonElement, pokemonHealth));
+        }
+
+        // Đọc và xử lý từng cuộc thi cho đến "End"
+        while (!(line = scanner.nextLine()).equals("End")) {
+            for (Trainer trainer : trainers.values()) {
+                if (trainer.hasPokemonWithElement(line)) {
+                    trainer.increaseBadge();
+                } else {
+                    trainer.damagePokemons();
+                }
+            }
+        }
+
+        // In kết quả sau cuộc thi
+        List<Trainer> sortedTrainers = new ArrayList<>(trainers.values());
+        sortedTrainers.sort((t1, t2) -> Integer.compare(t2.getNumberOfBadges(), t1.getNumberOfBadges()));
+
+        for (Trainer trainer : sortedTrainers) {
+            System.out.println(trainer.getName() + " " +
+                               trainer.getNumberOfBadges() + " " +
+                               trainer.getPokemons().size());
+        }
+    }
+}
