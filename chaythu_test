@@ -1,116 +1,115 @@
 
+//------------------------------- pokemon -----------------------------
+
 	import java.util.*;
+	 
 	
-	class Item{
+	class Trainer{
         private String name;
-        private double price;
-        private double discount;
-        public Item(String name , double price  , double discount ){
-            this.name = name;
-            this.price = price ;
-            this.discount = discount ;
-        }
-        public double  getPrice(){
-            return this.price;                     
-        }
-        public double getDiscount(){
-            return this.discount ;
-        }
-        public String toString(){
-            return String.format("%s $%.2f ($%.2f)", name , price  , discount );
-        }
-    }
-	class Employee{
-        private String name;
-        public Employee(String name){
+        private int numberOfBadges;
+        private ArrayList<Pokemon> pokemons ;
+        public Trainer(String name ){
             this.name = name ;
+            this.numberOfBadges = 0 ;
+            this.pokemons = new ArrayList<>();
+        }
+        public void Tanghuyhieu(){
+            this.numberOfBadges++;
         }
         public String getName(){
-            return this.name ;
+            return this.name;
+        }
+        public int getNumberOfBadges(){
+            return this.numberOfBadges;
+        }
+        public void add(Pokemon a ){
+            this.pokemons.add(a);
+        }
+        public boolean KtraElement(String  a){
+            for( Pokemon b : pokemons ){
+                if( b.getElement().equals(a) )
+                    return true;
+            }
+            return false;
+        }
+        public void Giamsucmanh(){
+             for( Pokemon a : pokemons ){
+                 a.giamHealth() ;
+                 
+             }
+            pokemons.removeIf( a -> a.KtraHealth());
+           // for( Pokemon a : pokemons ){
+           // if( !a.KtraHealth() )
+             //   pokemons.remove(a);
+                                  //     }
+        }
+        public ArrayList<Pokemon> getPokemons(){
+            return pokemons;
+        }
+    }
+	
+
+//------------------------------------------------------------------------
+	class Pokemon{
+        private String name ; 
+        private String element;
+        private int health;
+        public Pokemon(String name , String element , int health){
+            this.name = name;
+            this.element = element;
+            this.health = health;
+        }
+        public String getName(){
+            return this.name;
+        }
+        public String getElement(){
+            return this.element ;
+        }
+        public int getHealth(){
+            return this.health;
+        }
+        public void giamHealth(){          
+            this.health -= 10 ;           	              
+        }
+        public boolean KtraHealth(){
+            
+            return this.health<=0;
         }
         
     }
-		class GroceryBill{
-            protected Employee clerk;
-            protected ArrayList<Item> recipt;
-            protected double total;
-            public GroceryBill(Employee clerk ){
-                this.clerk = clerk;
-                this.recipt = new ArrayList<>();
-                this.total = 0 ; 
+//---------------------------------------------------------Main-------------------
+	public class  Main{
+        public static void main(String[] args ){
+            Scanner ip = new Scanner(System.in);
+            String s ;
+            Map <String , Trainer > luu = new LinkedHashMap<>();  
+            while( !(s = ip.nextLine()).equals("Tournament") ){
+               
+                String s2[] = s.split(" ");
+                String a = s2[0];
+                String b = s2[1];
+                String c = s2[2];
+                int d = Integer.parseInt(s2[3]);
+                luu.putIfAbsent(a, new Trainer(a));
+                luu.get(a).add(new Pokemon(b,c,d));
             }
-            public void add(Item i){
-                this.recipt.add(i);
-                total += i.getPrice();
+            
+            while( !(s = ip.nextLine()).equals("End")  ){
+                for( Trainer a : luu.values() ){
+                    if( a.KtraElement(s) )
+                        a.Tanghuyhieu();
+                    else 
+                        a.Giamsucmanh();
+                }
             }
-            public double  getTotal(){
-                return total;
-            }
-            public Employee getClerk(){
-                return clerk;
-            }
-            public String toString(){
-                StringBuilder s = new StringBuilder();
-                s.append("item:\n");
-               for( Item i : recipt )
-                   s.append("  ").append(i.toString()).append("\n");
-                	s.append(String.format("total: $.2f\n", total) );
-                	s.append("Clerk: ").append(clerk.getName() ) ;
-                return s.toString();
-            } 
-        }
-	
-		class DiscountBill extends GroceryBill{
-            protected double discountAmount;
-            protected Employee clerk ;
-            protected double total  ; 
-           // protected ArrayList<Item> recipt ;
-            public DiscountBill(Employee clerk, double total , double discountAmount  ){
-                super(clerk , total);
-                this.discountAmount = 0 ;
-                
-            } 
-            public void add(Item i ){
-                recipt.add(i);
-                this.total += i.getPrice();
-                this.discountAmount += i.getDiscount();
-            }
-            public String toString(){
-                StringBuilder s = new StringBuilder();
-                s.append("Item:\n");
-              double tong = 0 ;
-                for( Item i : recipt ){
-                    s.append("  ").append(i.toString()).append("\n");
-                	tong += i.getPrice() * i.getDiscount() ;
-                    }
-                s.append(String.format("sub-total: $%.2f\n"  , this.total));
-                s.append(String.format("discount: $%.2f\n", this.discountAmount ));
-                s.append(String.format("total: $%.2f\n" ,this.total - tong  ));
-                s.append("Clerk: ").append(clerk.getName());
-                return s.toString();
+            for( Trainer a : luu.values() ){
+                System.out.println(a.getName() +" "+ a.getNumberOfBadges() + " " +a.getPokemons().size() );
             }
             
         }
-	
-	public class Main{
-        public static void main(String[] args){
-            Employee a = new Employee("GoceryBill");
-            GroceryBill a1 = new GroceryBill(a);
-            a1.add(new Item("item 1" , 2.3 , 0 ) )  ;
-            a1.add(new Item("item 2" , 3.45  , 0 ));
-           System.out.println( a1.toString() );
-            
-            System.out.println("");
-            
-            Employee b = new Employee("Discount Bill");
-            DiscountBill b1 = new DiscountBill(b);
-            b1.add(new Item("item 3" , 20 ,  15 );
-            b1.add(new Item("item 4" , 40  , 35));
-            b1.add(new Item("item 5", 50 , 35));
-           System.out.println( b1.toString() ) ; 
-         }
     }
-	
 
 
-	
+
+
+
