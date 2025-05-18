@@ -1,3 +1,4 @@
+/* chatGPT làm 
 import java.util.*;
 
  class Pokemon {
@@ -118,3 +119,119 @@ public class Main {
         }
     }
 }
+*/
+
+//------------------------ học theo và tối ưu
+
+	
+	import java.util.*;
+	
+	class Traniner{
+        private String name;
+        private int numberOfBadges;
+        private ArrayList<Pokemon> pokemons ;
+        public Traniner(String name ){
+            this.name = name ;
+            this.numberOfBadges = 0 ;
+            this.pokemons = new ArrayList<>();
+        }
+        public String getName(){
+            return this.name ;
+        }
+        public int getNumberOfBadges(){
+            return this.numberOfBadges;
+        }
+        
+        public void add(Pokemon a ){
+            pokemons.add(a);
+        }
+        public int soluong(){
+            return pokemons.size();
+        }
+        public void tanghuyhieu(){
+            this.numberOfBadges++;
+        }
+        public boolean ktra_element(String a){
+            for( Pokemon b : pokemons ){
+                if(  b.getElement().equals(a) )
+                    return true;
+            }
+            return false ;
+        }
+        
+        public void giamsucmanh(){
+            for(  Pokemon a : pokemons ){
+               a.giamHealth();
+            }
+            pokemons.removeIf(  a -> a.ktra_health() );
+        }
+       
+    }
+
+	class Pokemon{
+        private String name;
+        private String element;
+        private int health;
+        public Pokemon(String name , String element , int health){
+            this.name = name;
+            this.element = element ; 
+            this.health = health;
+        }
+        
+        public String getName(){
+            return this.name ;
+        }
+        public String getElement(){
+            return this.element;
+            }
+            
+        public int getHealth(){
+            return this.health;
+        }
+        public void giamHealth(){
+            this.health -= 10 ;
+        }
+        public boolean ktra_health(){
+            return this.health<0;
+        }
+    }	
+
+	public class Main{
+        public static void main(String[] args ){
+            Scanner ip = new Scanner(System.in);
+            
+            HashMap<String , Traniner > luu = new LinkedHashMap<>();
+            String s ;
+            while ( !(s = ip.nextLine()).equals("Tournament")  ){
+          
+                String s2[] = s.split(" ");
+                String a = s2[0];
+                String b = s2[1];
+                String c = s2[2];
+                int d = Integer.parseInt(s2[3]);
+                luu.putIfAbsent(a, new Traniner(a));
+                luu.get(a).add(new Pokemon(b,c,d));
+            }
+            while( !(s = ip.nextLine()).equals("End") ){
+              
+                for( Traniner a : luu.values() ){
+                    if( a.ktra_element(s) )
+                        a.tanghuyhieu();
+                    else{
+                        a.giamsucmanh();
+                    }
+                }
+            }
+            ArrayList<Traniner> sapxep = new ArrayList<>(luu.values());
+            sapxep.sort((t1,t2) -> Integer.compare(t2.getNumberOfBadges(), t1.getNumberOfBadges())); 
+            for( Traniner a : sapxep ){
+                System.out.println( a.getName() + " " + 
+                                  a.getNumberOfBadges() + " "+ 
+                                  a.soluong());
+            }
+        }
+    }
+
+
+
+
