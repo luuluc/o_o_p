@@ -1,3 +1,4 @@
+/* chatGPT làm 
 import java.util.*;
 import java.util.regex.*;
 
@@ -62,3 +63,75 @@ public class Main {
         sc.close();
     }
 }
+*/
+
+// học theo và cải thiện 
+
+import java.util.*;
+	
+	interface Callable{
+        public String call();
+    }
+
+	interface Browsable{
+        public String browse();
+    }
+
+	class Smartphone implements Callable,Browsable{
+        private ArrayList<String> numbers;
+        private ArrayList<String> urls;
+        public Smartphone( ArrayList<String> numbers , ArrayList<String> urls ){
+            this.numbers = new ArrayList<>(numbers) ; 
+            this.urls = new ArrayList<>(urls);
+        }
+        @Override
+        public String  call(){
+            StringBuilder s = new StringBuilder();
+            for( String a : numbers ){
+                if( a.matches("\\d+") ){
+                    s.append("Calling... ").append(a).append("\n");
+                }
+                else
+                    s.append("Invalid number!\n");
+            }
+            return s.toString();
+        }
+        @Override
+        public String  browse(){
+            StringBuilder s = new StringBuilder();
+            
+            for( String a : urls ){
+                if(  a.matches(".*\\d.*") )
+                    s.append("Invalid URL!\n");
+                else 
+                    s.append("Browsing: ").append(a).append("!\n");
+            }
+             return s.toString();
+        }
+    } 
+
+	public class Main{
+        public static void main(String[] args){
+            Scanner ip = new Scanner(System.in);
+            int t = ip.nextInt();
+            ip.nextLine();
+            while( t-->0 ){
+                String s0 = ip.nextLine();
+                String s00[] = s0.split(" ");
+                String s1 = ip.nextLine();
+                String s11[] = s1.split(" ");
+                ArrayList<String> a = new ArrayList<>();
+                for( int i = 0 ; i< s00.length ; i++ )
+                    a.add(s00[i]);
+                ArrayList<String> b = new ArrayList<>();
+                for( int i =0 ; i< s11.length ; i++ )
+                    b.add(s11[i]);
+                
+                Smartphone x = new Smartphone(a,b);
+                System.out.print(x.call());
+                 System.out.println(x.browse());
+             }
+        }
+    }
+ 
+      
