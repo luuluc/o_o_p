@@ -67,6 +67,7 @@ public class Main {
 
 // học theo và cải thiện 
 
+
 import java.util.*;
 	
 	interface Callable{
@@ -88,7 +89,7 @@ import java.util.*;
         public String  call(){
             StringBuilder s = new StringBuilder();
             for( String a : numbers ){
-                if( a.matches("\\d+") ){
+                if( a.matches("\\d+") ){ // kiem tra chuoi co toan là so không 
                     s.append("Calling... ").append(a).append("\n");
                 }
                 else
@@ -101,10 +102,10 @@ import java.util.*;
             StringBuilder s = new StringBuilder();
             
             for( String a : urls ){
-                if(  a.matches(".*\\d.*") )
-                    s.append("Invalid URL!\n");
-                else 
+                if(  a.matches("\\D+") ) // kiem tra chuỗi có toàn là ký tự không 
                     s.append("Browsing: ").append(a).append("!\n");
+                else 
+                  s.append("Invalid URL!\n");
             }
              return s.toString();
         }
