@@ -85,22 +85,20 @@ public class Main {
                     emp.setEmail(tokens[3]);
                 } else {
                     // Thử parse thành tuổi
-                    try {
+                   
                         int age = Integer.parseInt(tokens[3]);
                         emp.setAge(age);
-                    } catch (NumberFormatException e) {
+              
                         // Nếu không parse được, bỏ qua hoặc set mặc định
-                    }
+                    
                 }
             } else if (tokens.length == 5) {
                 // Giả sử thứ tự là email trước, rồi đến age
                 emp.setEmail(tokens[3]);
-                try {
+                
                     int age = Integer.parseInt(tokens[4]);
                     emp.setAge(age);
-                } catch (NumberFormatException e) {
-                    // Xử lý nếu không parse được
-                }
+                
             }
             employees.add(emp);
         }
