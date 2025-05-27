@@ -1,0 +1,141 @@
+import java.util.*;
+
+class Employee {
+    // Các trường (property) bắt buộc
+    private String name;
+    private double salary;
+    private String department;
+
+    // Các trường (property) tùy chọn
+    private String email; // nếu không nhập, gán "n/a"
+    private int age;      // nếu không nhập, gán -1
+
+    public Employee(String name, double salary, String department) {
+        this.name = name;
+        this.salary = salary;
+        this.department = department;
+        // Giá trị mặc định cho các trường tùy chọn
+        this.email = "n/a";
+        this.age = -1;
+    }
+
+    // Getter & Setter cho email
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    public String getEmail() {
+        return this.email;
+    }
+
+    // Getter & Setter cho age
+    public void setAge(int age) {
+        this.age = age;
+    }
+    public int getAge() {
+        return this.age;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public double getSalary() {
+        return this.salary;
+    }
+
+    public String getDepartment() {
+        return this.department;
+    }
+
+    // toString() theo định dạng yêu cầu: {name} {salary} {email} {age}
+    @Override
+    public String toString() {
+        // In lương với 2 chữ số sau dấu thập phân
+        return String.format("%s %.2f %s %d", 
+                             this.name, 
+                             this.salary, 
+                             this.email, 
+                             this.age);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        // Bước 1: Đọc số lượng nhân viên N
+        int N = Integer.parseInt(sc.nextLine().trim());
+        List<Employee> employees = new ArrayList<>();
+
+        // Bước 2: Nhập N dòng thông tin nhân viên
+        for (int i = 0; i < N; i++) {
+            String line = sc.nextLine().trim();
+            String[] tokens = line.split("\\s+");
+            // Bắt buộc có ít nhất 3 trường: name, salary, department
+            String name = tokens[0];
+            double salary = Double.parseDouble(tokens[1]);
+            String department = tokens[2];
+
+            Employee emp = new Employee(name, salary, department);
+
+            // Kiểm tra các trường còn lại (email, age) nếu có
+            if (tokens.length == 4) {
+                // Có thể là email hoặc age
+                if (tokens[3].contains("@")) {
+                    emp.setEmail(tokens[3]);
+                } else {
+                    // Thử parse thành tuổi
+                    try {
+                        int age = Integer.parseInt(tokens[3]);
+                        emp.setAge(age);
+                    } catch (NumberFormatException e) {
+                        // Nếu không parse được, bỏ qua hoặc set mặc định
+                    }
+                }
+            } else if (tokens.length == 5) {
+                // Giả sử thứ tự là email trước, rồi đến age
+                emp.setEmail(tokens[3]);
+                try {
+                    int age = Integer.parseInt(tokens[4]);
+                    emp.setAge(age);
+                } catch (NumberFormatException e) {
+                    // Xử lý nếu không parse được
+                }
+            }
+            employees.add(emp);
+        }
+
+        sc.close();
+
+        // Bước 3: Tính lương trung bình theo phòng ban
+        // Dùng Map<String, List<Employee>> để gom theo department
+        Map<String, List<Employee>> groupByDept = new HashMap<>();
+        for (Employee emp : employees) {
+            groupByDept.putIfAbsent(emp.getDepartment(), new ArrayList<>());
+            groupByDept.get(emp.getDepartment()).add(emp);
+        }
+
+        // Tìm phòng ban có lương trung bình cao nhất
+        double maxAverage = 0.0;
+        String bestDepartment = "";
+
+        for (String dept : groupByDept.keySet()) {
+            List<Employee> empsInDept = groupByDept.get(dept);
+            double sum = 0;
+            for (Employee e : empsInDept) {
+                sum += e.getSalary();
+            }
+            double avg = sum / empsInDept.size();
+            if (avg > maxAverage) {
+                maxAverage = avg;
+                bestDepartment = dept;
+            }
+        }
+
+        // Bước 4: In kết quả
+        System.out.println("Highest Average Salary: " + bestDepartment);
+        for (Employee e : groupByDept.get(bestDepartment)) {
+            System.out.println(e.toString());
+        }
+    }
+}
