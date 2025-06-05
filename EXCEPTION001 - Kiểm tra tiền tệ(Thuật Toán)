@@ -1,5 +1,5 @@
 
-
+/* thuật toán 
 	import java .util.*;
 	
 	public class Main{
@@ -27,6 +27,44 @@
                 System.out.println(sum);
                 else 
                      System.out.println("Currency doesn't match");
+            }
+        }
+    }
+*/
+
+/// làm theo class
+
+import java.util.*;
+
+	class Amount{
+        private String currency;
+        private int amount;
+        public Amount(String currency , int amount){
+            this.currency =currency; 
+            this.amount  = amount ;
+        }
+        public void add(Amount a ){
+            if( this.currency.equals(a.currency) ){
+                this.amount += a.amount;
+                System.out.println(this.amount);
+            }
+            else 
+                System.out.println( "Currency doesn't match" );
+        }
+    }
+
+	public class Main{
+        public static void main(String[]  args ){
+            Scanner ip = new Scanner(System.in);
+            int t = ip.nextInt();
+            ip.nextLine();
+            while( t--> 0 ){
+                String s[] = ip.nextLine().split("\\s+");
+                int a = Integer.parseInt(s[1]);
+                int b = Integer.parseInt(s[3]);
+                Amount x = new Amount(s[0],a);
+                Amount y = new Amount(s[2],b);
+                x.add(y);
             }
         }
     }
