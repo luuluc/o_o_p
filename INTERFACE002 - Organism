@@ -1,0 +1,67 @@
+
+import java.util.*;
+
+	interface  Movable{
+        public void move(int dx , int dy );
+    }
+
+	class Organism implements Movable {
+        private int x ; 
+        private int y ; 
+        public Organism(int x , int y ){
+            this.x = x ; 
+            this.y = y; 
+        }
+        
+        @Override
+        public void move(int x  , int y ){
+            this.x +=  x;
+            this.y += y;
+        }
+        public String toString(){
+         return String.format("x:%d;y:%d" , this.x , this.y); 
+        }
+    }
+
+	class Herd{
+        private ArrayList<Organism> luu ;
+        public Herd(){
+            this.luu = new ArrayList<>();
+        }
+        public void  addtoHerd( Organism a ){
+            luu.add(a);
+        }
+        public void move(int dx , int dy ){
+            for( Organism a : luu ){
+                a.move(dx,dy);
+            }
+        }
+        public String toString(){
+            StringBuilder in = new StringBuilder(); 
+        for( Organism a : luu ){
+            in.append( a.toString()).append("\n");
+        }
+            return in.toString() ;
+        }
+      
+    }
+
+
+	public class Main{
+        public static void main(String[] args ){
+            Scanner ip = new Scanner(System.in);
+            int t = ip.nextInt();
+            ip.nextLine();
+            while( t--> 0  ){
+                int x = ip.nextInt();
+                int y = ip.nextInt();
+                Organism a = new Organism(x,y);
+               
+                Herd b = new Herd();
+                b.addtoHerd(a);
+                b.move(1,1);
+                System.out.print(b);
+            }
+           
+        }
+    }
