@@ -1,0 +1,66 @@
+
+	import java.util.*;
+	
+	abstract class Shape{
+        protected String name ; 
+        public Shape(String name ){
+            this.name = name ;
+        }
+        abstract  double  calculateArea();
+         abstract  String displayinfo();
+    }
+	
+	class Circle extends Shape{ 
+        private double radius;
+        public Circle(String name , double radius ){
+            super(name);
+            this.radius = radius;
+        }
+        public double  calculateArea(){
+            return Math.PI *  radius * radius;
+        }
+        public String displayinfo(){
+      return String.format("Shape:Circle|Area:%.2f" ,this.calculateArea());
+        }
+        
+        
+    }
+
+	class Rectangle extends Shape {
+        private double width ; 
+        private double length;
+        public Rectangle(String name , double length , double width){
+            super(name);
+            this.length = length ;
+            this.width = width;
+        }
+        public double calculateArea(){
+            return this.length * this.width;
+        }
+        public String displayinfo(){
+      return String.format("Shape:Rectangle|Area:%.2f" ,this.calculateArea());
+        }
+    }
+	public class Main{
+        public static void main(String[] args ){
+            Scanner ip = new Scanner(System.in);
+                int t = ip.nextInt();
+            ip.nextLine();
+            while( t--> 0 ){
+                String s[] = ip.nextLine().split("\\s+");
+                double a = Double.parseDouble(s[1]);
+               
+                if( s[0].equals("Rectangle") ){ 
+                    double b = Double.parseDouble(s[2]);
+                    Rectangle x = new Rectangle(s[0],a,b);
+                    System.out.println( x.displayinfo() );
+                    
+                }
+                else if(s[0].equals("Circle")  ){
+                    Circle x  = new Circle(s[0] ,a);
+                      System.out.println( x.displayinfo() );
+                }
+            }
+        }
+    }
+        
