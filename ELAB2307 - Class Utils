@@ -1,0 +1,33 @@
+import java.io.IOException;
+
+import java.util.*;
+ class Utils {
+    public static void u(String s) {
+        try {
+            System.out.println(s);
+            z(s);
+            try {
+                System.out.println(Integer.parseInt(s) + 1);
+            } catch (Exception e) {
+                System.out.println(s.toUpperCase());
+            }
+        } catch (Exception e) {
+            System.out.println(1);
+        }
+    }
+
+    public static void z(String s) throws Exception {
+        System.out.println(2);
+        if (s.length() == 1)
+            throw new Exception();
+        System.out.println(3);
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Utils.u(sc.next());
+        sc.close();
+    }
+    
+}
