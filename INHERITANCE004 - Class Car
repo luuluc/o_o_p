@@ -1,0 +1,81 @@
+
+import java.util.*;
+	
+	abstract class Car{
+        public static double max = 0.0 ; 
+        protected double price  ; 
+        protected int year ;
+        
+        public Car( double price , int year){
+            this.price = price  ; 
+            this.year = year ;
+        }
+        public String toString(){
+    return String.format("Price: %,.2f VND | Year: %d", this.price , this.year);
+        }
+        
+        abstract public double calculateSalePrice();
+    } 
+
+	class SportCar extends Car{
+        public SportCar(double price , int year ){
+            super(price, year );
+        }
+        
+        @Override 
+        public double calculateSalePrice(){
+            if( super.year > 2018 )
+                 super.price *= 0.8  ;
+            else if( super.year > 2010 && super.year <=2018 )
+                super.price *=  0.5 ;
+            else 
+                 super.price *= 0.1 ;
+            if( super.price > max  )
+                max = super.price ;
+            return super.price;
+            
+        }
+        
+    }
+
+	class ClassicCar extends Car{
+        public ClassicCar(double price , int year ){
+            super(price,year );
+        }
+       @Override 
+       public  double calculateSalePrice(){
+           super.price *= 1.12;
+           super.price += 20000000;
+           if( super.price > max  )
+               max = super.price ;
+           return super.price ;
+       }
+    }
+
+ public class Main{
+     public static void main(String[] args ){
+         Scanner ip = new Scanner(System.in);
+             int t = ip.nextInt();
+         ip.nextLine();
+         while( t-->  0  ){
+             String s[] = ip.nextLine().split("\\s+");
+             double k = Double.parseDouble(s[1]);
+             int v = Integer.parseInt(s[2]);
+             if( s[0].equals("SC") ){
+                 
+                 Car a = new SportCar(k  , v );
+                 a.calculateSalePrice();
+                 System.out.println(a);
+             }
+             else if( s[0].equals("CC") ){
+                 Car a = new ClassicCar(k , v );             
+                 a.calculateSalePrice();
+                  System.out.println(a);
+             }
+             
+         }
+   System.out.println("Most Expensive: " + String.format("%,.2f VND", Car.max));
+
+     }
+ }
+
