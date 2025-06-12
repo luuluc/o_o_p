@@ -1,0 +1,20 @@
+
+import java.util.*;
+	
+	public class Main{
+        public static void main( String[] args){
+            Scanner ip = new Scanner(System.in);
+            int t = ip.nextInt();
+            ip.nextLine();
+            while( t-- > 0  ){
+                int c = 0 ;
+                String a = ip.nextLine();
+                String s[] = a.split("");
+                for( int i =0 ; i < s.length ; i++ ){
+                    if( s[i].matches("\\d++") )
+                        c++;
+                }
+                System.out.println(c);
+            }
+             }
+    }
