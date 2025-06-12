@@ -1,0 +1,66 @@
+import java.util.*;
+
+class Point {
+    private double x;
+    private double y;
+    private double z;
+
+    public Point(double x, double y, double z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+
+    public String Tinh(Point a) {
+        return String.format("%.2f", Math.sqrt(
+                Math.pow(this.x - a.x, 2) +
+                Math.pow(this.y - a.y, 2) +
+                Math.pow(this.z - a.z, 2)
+        ));
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner ip = new Scanner(System.in);
+        HashMap<String, Point> luu = new LinkedHashMap<>();
+        String[] s1 = new String[30];
+        int i = 0;
+
+        while (true) {
+            String s = ip.nextLine();
+            s1[i] = s;  
+            boolean trung = false;
+
+            for (int k = 0; k < i; k++) {
+                if (s1[k].equals(s)) {
+                    trung = true;
+                    break;
+                }
+            }
+            if (trung) break;
+            i++;
+
+            double x = ip.nextDouble();
+            double y = ip.nextDouble();
+            double z = ip.nextDouble();
+            ip.nextLine(); // bỏ dòng trống
+
+            Point A = new Point(x, y, z);
+            luu.put(s, A);
+        }
+
+        String dd = s1[i]; 
+        for (String key : luu.keySet()) {
+            if (!key.equals(dd)) {
+                System.out.print("Line " + dd + key + ": " );
+                String  g = luu.get(key).Tinh(luu.get(dd)) ;
+                double h = Double.parseDouble(g);
+                if( h != 0  )
+                System.out.println(g);
+                else if (h==0)
+                    System.out.println("same point");
+            }
+        }
+    }
+}
