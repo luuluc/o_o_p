@@ -1,0 +1,74 @@
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+// Interface trả về giá
+interface PricedItem {
+    double getPrice();
+}
+
+// Interface trả về tên nhà hàng
+interface SourceName {
+    String getSourceName();
+}
+
+// Lớp món ăn triển khai cả hai interface
+class Dish implements PricedItem, SourceName {
+    private String name;
+    private double price;
+    private String restaurantName;
+
+    public Dish(String name, double price, String restaurantName) {
+        this.name = name;
+        this.price = price;
+        this.restaurantName = restaurantName;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public double getPrice() {
+        return price;
+    }
+
+    @Override
+    public String getSourceName() {
+        return restaurantName;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner ip = new Scanner(System.in);
+        int t = Integer.parseInt(ip.nextLine());
+
+        ArrayList<Dish> list = new ArrayList<>();
+
+        // Regex tách chuỗi có dấu ngoặc kép
+        Pattern pattern = Pattern.compile("Dish\\s+\"(.*?)\"\\s+(\\d+(?:\\.\\d+)?)\\s+\"(.*?)\"");
+
+        while (true) {
+            String line = ip.nextLine();
+            if (line.equals("Checkout")) break;
+
+            Matcher matcher = pattern.matcher(line);
+            if (matcher.matches()) {
+                String name = matcher.group(1);
+                double price = Double.parseDouble(matcher.group(2));
+                String restaurantName = matcher.group(3);
+                list.add(new Dish(name, price, restaurantName));
+            }
+        }
+
+        // Đọc tên nhà hàng cần lọc (loại bỏ dấu ngoặc kép nếu có)
+        String target = ip.nextLine().replaceAll("^\"|\"$", "");
+
+        for (Dish d : list) {
+            if (d.getSourceName().equals(target)) {
+                System.out.printf("\"%s\" - %.2f\n", d.getName(), d.getPrice());
+            }
+        }
+    }
+}
