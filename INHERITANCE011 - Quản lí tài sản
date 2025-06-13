@@ -1,0 +1,124 @@
+
+import java.util.*;
+	
+	abstract class Asset{
+        protected String name ; 
+        protected double value;
+        protected int ngaymua ; 
+        public Asset(String name , double value ){
+            this.name = name;
+            this.value = value;
+           
+        }
+        public String getName(){
+            return this.name ;
+        }
+        public double getValue(){
+            return this.value;
+        }
+       abstract public double haomon();
+    }
+	// tai san co dinh
+	class FixedAsset extends Asset{
+        private double tg ;
+        public  FixedAsset(String name , double value  , double tg ){
+            super(name,value);
+            this.tg = tg ; 
+        }
+        @Override 
+        public double haomon(){
+            return super.value/this.tg ;
+        }
+    }
+	/// luu dong tai khoan
+	class CurrentAsset extends Asset{
+        private double gtthanhly;
+        public CurrentAsset(String name , double value , double gtthanhly){
+            super(name,value);
+            this.gtthanhly = gtthanhly;
+        }
+        @Override 
+        public double haomon(){
+            return super.value*0.1;
+        }
+    }
+
+	class  IntangibleAsset extends Asset{
+    private double tgkhauhao  ;
+    public IntangibleAsset(String name , double value , double tgkhauhao ){
+        super(name,value);
+        this.tgkhauhao = tgkhauhao ;
+    }
+    @Override 
+    public double  haomon(){
+        return super.value/this.tgkhauhao;
+    }
+    
+}
+
+	class AssetManager{
+        private  ArrayList<Asset> luu = new ArrayList<>();
+      	public  void add( Asset a ){
+            luu.add(a);
+        }
+        public String  sumtaisan(){
+            double sum = 0.0 ; 
+            for( Asset x : luu ){
+               sum += x.getValue(); 
+            }
+            return String.format("Total Value of Assets: %.1f", sum) ;
+        }
+        public String  sumhaomon(){
+            double sum1 = 0.0;
+            for( Asset x : luu ){
+                sum1 += x.haomon();
+            }
+           return String.format("Total Depreciation of Assets: %.1f", sum1) ;
+        }
+        public void in(){
+            for( Asset x : luu ){
+                System.out.println("Asset Name: "+ x.getName());
+                System.out.println("Asset Value: "+ x.getValue());
+                System.out.println(String.format("Depreciation: %.1f" ,  x.haomon()) ); 
+                 System.out.println("---------------------------");
+            }
+        }
+    } 
+
+public class Main{
+    public static void main(String[] args ){
+        Scanner ip = new Scanner(System.in);
+        int t = ip.nextInt();
+        ip.nextLine();
+        AssetManager g = new AssetManager();
+        while( t--> 0  ){
+            
+            String s[] = ip.nextLine().split("\\s+");
+            double k = Double.parseDouble(s[2]);
+            double v = Double.parseDouble(s[3]);
+            if( s[0].equals("FixedAsset") ){
+                FixedAsset a = new FixedAsset(s[1],k,v);
+                g.add(a);
+            }
+            else if(  s[0].equals("CurrentAsset") ){
+                CurrentAsset a = new CurrentAsset(s[1],k,v);
+                g.add(a);
+            }
+            else if(  s[0].equals("IntangibleAsset") ){
+               IntangibleAsset a = new IntangibleAsset(s[1],k,v);
+                g.add(a);
+            }
+          
+          
+         
+            }
+        	g.in();
+        		
+            System.out.println(g.sumtaisan());
+         		System.out.println(g.sumhaomon());
+      
+     
+       
+        //ip.close();
+    }
+}
