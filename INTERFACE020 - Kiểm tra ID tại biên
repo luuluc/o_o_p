@@ -1,0 +1,90 @@
+
+import java.util.*;
+interface Identifiable{
+    public String getId() ;
+}
+
+class Human implements Identifiable{
+    private String name ;
+    private int age ; 
+    private String id ; 
+    public Human(String name , int age ,String id){
+        this.name = name ; 
+        this.age = age ; 
+        this.id = id ;
+    }
+    @Override 
+    public String getId(){
+        return this.id ;
+    }
+} 
+class Robot implements Identifiable{
+    private String model ; 
+    private String id ;
+    public Robot( String model,String id){
+        this.id = id ;
+        this.model= model;
+    }
+    @Override 
+    public String getId(){
+        return this.id ;
+    }
+}
+
+	public class Main{
+        public static void main(String[] args ){
+            Scanner ip = new Scanner(System.in);
+            int t = ip.nextInt();
+            ip.nextLine(); 
+            ArrayList<Human> luu = new ArrayList<>();
+            ArrayList<Robot>luu1 = new ArrayList<>();
+            
+            while( true ){
+                String s[] = ip.nextLine().split("\\s+");
+               if( s[0].equals("End") )
+                   break;
+               if( s[0].equals("Human") ){
+                   if(s.length == 5 ){
+                   int k = Integer.parseInt(s[3]);
+                       String c = s[1]+s[2];
+                       Human a = new Human(c,k,s[4]);
+                       luu.add(a);
+                       }else if( s.length == 4 ){
+                       int k = Integer.parseInt(s[2]);                     
+                   		Human a = new Human(s[1],k,s[3]);
+                        luu.add(a);
+                   }
+               }
+                else if(  s[0].equals("Robot") ){
+                    if( s.length == 4 ){
+                        String c = s[1]+s[2];
+                        Robot a = new Robot(c,s[3]);
+                        luu1.add(a);
+                    }else if( s.length==3  ){
+                        Robot a = new Robot(s[1],s[2]);
+                        luu1.add(a);
+                    }
+                }
+                
+            }
+            String g = ip.nextLine();
+            ArrayList<Long> in= new ArrayList<>();
+            for( Human x : luu  ){
+                if (x.getId().contains(g)  ){
+                     Long a = Long.parseLong(x.getId());
+                  in.add(a);
+                }
+            }
+            for( Robot x : luu1  ){
+                if (x.getId().contains(g)  ){
+                    Long a = Long.parseLong(x.getId());
+                  in.add(a);
+                }
+            }
+          in.sort((t1, t2) -> Long.compare(t2, t1));
+
+            for(long x : in ){
+               System.out.println(x);
+            }
+        }
+    }
