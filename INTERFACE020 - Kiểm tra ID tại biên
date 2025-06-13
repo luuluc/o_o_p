@@ -1,4 +1,5 @@
-
+/*
+// tự làm chỉ đúng 2/10
 import java.util.*;
 interface Identifiable{
     public String getId() ;
@@ -88,3 +89,82 @@ class Robot implements Identifiable{
             }
         }
     }
+*/
+
+// 10/10
+import java.util.*;
+
+interface Identifiable {
+    String getId();
+}
+
+class Human implements Identifiable {
+    private String name;
+    private int age;
+    private String id;
+
+    public Human(String name, int age, String id) {
+        this.name = name;
+        this.age = age;
+        this.id = id;
+    }
+
+    public String getName() { return name; }
+    public int getAge() { return age; }
+    public String getId() { return id; }
+}
+
+class Robot implements Identifiable {
+    private String model;
+    private String id;
+
+    public Robot(String model, String id) {
+        this.model = model;
+        this.id = id;
+    }
+
+    public String getModel() { return model; }
+    public String getId() { return id; }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int testCases = Integer.parseInt(sc.nextLine()); // chỉ đọc nhưng không dùng vì luôn là 1
+
+        List<Identifiable> allEntities = new ArrayList<>();
+
+        while (true) {
+            String line = sc.nextLine();
+            if (line.equals("End")) break;
+
+            String[] tokens = line.split(" ");
+
+            if (tokens[0].equals("Human")) {
+                // Ví dụ: Human Peter 25 9010101184
+                String name = tokens[1];
+                int age = Integer.parseInt(tokens[2]);
+                String id = tokens[3];
+                allEntities.add(new Human(name, age, id));
+            } else if (tokens[0].equals("Robot")) {
+                // Ví dụ: Robot R2 D2 88888888184
+                // Chúng ta cần gộp lại model nếu có nhiều từ
+                String model = "";
+                for (int i = 1; i < tokens.length - 1; i++) {
+                    if (i > 1) model += " ";
+                    model += tokens[i];
+                }
+                String id = tokens[tokens.length - 1];
+                allEntities.add(new Robot(model, id));
+            }
+        }
+
+        String suffix = sc.nextLine(); // chuỗi đuôi để kiểm tra
+
+        for (Identifiable entity : allEntities) {
+            if (entity.getId().endsWith(suffix)) {
+                System.out.println(entity.getId());
+            }
+        }
+    }
+}
