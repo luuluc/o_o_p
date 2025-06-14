@@ -1,0 +1,66 @@
+
+
+import java.util.*;
+
+	class Sv{
+        private String ten ;
+        private int namsinh;
+        private double gpa ; 
+        private int tc;
+        public Sv(String ten , int namsinh , double gpa , int tc ){
+            this.ten = ten ; 
+            this.namsinh = namsinh ; 
+            this.gpa = gpa ;
+            this.tc = tc ;
+            
+        }
+        public String getten(){
+            return this.ten;
+            
+        }
+        public int getnamsinh(){
+            return this.namsinh;
+        }
+        public double getgpa(){
+            return this.gpa;
+        }
+        public int gettc(){
+            return this.tc;
+        }
+        public String toString(){
+            return this.ten+" "+this.namsinh+" "+ this.gpa+" "+this.tc;
+        }        
+                 
+    } 
+
+	public class Main{
+        public static void main(String[] args){
+            Scanner ip = new Scanner(System.in);
+                int t = ip.nextInt();
+              	ip.nextLine();
+                ArrayList<Sv> luu = new ArrayList<>();
+                while(t--> 0 ){
+                    String s[] = ip.nextLine().split("\\s+");
+                    int a =Integer.parseInt(s[1]);
+                    double b = Double.parseDouble(s[2]);
+                    int c = Integer.parseInt(s[3]);
+                    Sv x = new Sv(s[0],a,b,c);
+                    luu.add(x);
+                }
+            String g = ip.nextLine();
+            if( g.equals("BY_GPA_CREDIT_NAME") ){
+                luu.sort((t1,t2)->t1.getten().compareTo(t2.getten()));
+                luu.sort((t1,t2)->Integer.compare(t2.gettc(),t1.gettc()));
+                luu.sort((t1,t2)->Double.compare(t2.getgpa(),t1.getgpa()));
+            }
+            else if( g.equals("BY_BIRTH_GPA_NAME") ){
+                luu.sort((t1,t2)->t1.getten().compareTo(t2.getten()));
+                 luu.sort((t1,t2)->Double.compare(t2.getgpa(),t1.getgpa()));
+                  luu.sort((t1,t2)->Integer.compare(t1.getnamsinh(),t2.getnamsinh()));
+            }
+            for( Sv x : luu )
+                System.out.println(x);
+                
+            }
+        }
+    
