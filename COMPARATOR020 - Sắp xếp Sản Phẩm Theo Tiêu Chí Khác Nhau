@@ -1,0 +1,56 @@
+
+import java.util.*;
+	
+	class Sp{
+        private String ten ; 
+        private int gia;
+        private int tonkho;
+        public Sp(String ten , int gia , int tonkho){
+            this.ten = ten ; 
+            this.gia = gia ; 
+            this.tonkho = tonkho;
+        }
+        
+        public String getTen(){
+            return this.ten ; 
+        }
+        public int getGia(){
+            return this.gia ;
+        }
+        public int getTonkho(){
+            return this.tonkho ;
+        }
+        
+        public String toString(){
+            return this.ten+" "+this.gia+" "+this.tonkho;
+        } 
+    }
+
+	public class Main{
+        public static void main(String[] args){
+            Scanner ip= new Scanner(System.in);
+            int t = ip.nextInt();
+            ip.nextLine();
+            ArrayList<Sp> luu = new ArrayList<>();
+            while( t--> 0 ){
+                String s[] = ip.nextLine().split("\\s+");
+                int a = Integer.parseInt(s[1]);
+                   int b = Integer.parseInt(s[2]);
+                Sp x = new Sp(s[0],a,b);
+                luu.add(x);
+            }  
+            String g = ip.nextLine();
+            if( g.equals("BY_NAME") )
+                luu.sort((t1,t2)->t1.getTen().compareTo(t2.getTen()));
+        else if( g.equals("BY_PRICE") ){
+             luu.sort((t1,t2)->t1.getTen().compareTo(t2.getTen()));
+            luu.sort((t1,t2)-> Integer.compare(t1.getGia(),t2.getGia() ) );
+        }
+            else if( g.equals("BY_STOCK") ){
+                luu.sort((t1,t2)->t1.getTen().compareTo(t2.getTen()));
+                luu.sort((t1,t2)-> Integer.compare(t2.getTonkho(),t1.getTonkho()));
+            }
+        for( Sp x : luu )
+            System.out.println(x);
+    }
+    }
