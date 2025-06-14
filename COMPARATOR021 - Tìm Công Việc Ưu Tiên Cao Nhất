@@ -1,0 +1,40 @@
+
+import java.util.*;
+	
+	class Cv{
+         String ten ; 
+         int dut;
+      	 int tg ; 
+        public Cv(String ten , int dut , int tg ){
+            this.ten = ten ; 
+            this.dut  = dut ;
+            this.tg = tg ;
+        }
+
+        public String toString(){
+            return this.ten+" "+this.dut+" "+this.tg ;
+        } 
+    }
+
+public class Main{
+    public static void main(String[] args){
+        Scanner ip = new Scanner(System.in);
+        int t = ip.nextInt();
+        ip.nextLine();
+        ArrayList<Cv> luu = new ArrayList<>();
+        while( t--> 0 ){
+            String s[] = ip.nextLine().split("\\s+");
+            int a = Integer.parseInt(s[1]);
+             int b = Integer.parseInt(s[2]);
+            Cv x = new Cv(s[0],a,b);
+            luu.add(x);
+        }
+        luu.sort((t1,t2)-> t1.ten.compareTo(t2.ten));
+        luu.sort((t1,t2)->Integer.compare(t1.tg ,t2.tg));
+        luu.sort((t1,t2)->Integer.compare(t1.dut,  t2.dut));
+        for( Cv x : luu ){
+            System.out.println(x);
+            break;
+        }
+    }
+}
