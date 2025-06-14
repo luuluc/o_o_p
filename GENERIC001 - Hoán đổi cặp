@@ -1,0 +1,45 @@
+
+import java.util.*;
+	
+	class Pair<T> {
+		private T f ;
+        private T s ;
+        
+        public Pair(T f , T s){
+            this.f = f ;
+            this.s =s ; 
+        } 
+        
+       public T getF(){ return this.f ; }
+        public T getS(){ return this.s ; }
+        public void swap(){
+            T a ;
+            a = this.f ;
+            this.f = this.s ;
+            this.s =a ;
+           
+        }
+    }
+
+ 	public class Main{
+        public static void main(String[] args ){
+            Scanner ip = new Scanner(System.in);
+            int t = ip.nextInt();
+            ip.nextLine();
+            while( t--> 0 ){
+                String s[] = ip.nextLine().split("\\s+");
+                if( s[0].matches("\\d+") ){
+                    int a = Integer.parseInt(s[0]);
+                    int b = Integer.parseInt(s[1]);
+                    Pair<Integer> x  = new Pair(a,b);
+                    x.swap();
+                    System.out.println(x.getF()+" "+ x.getS());
+                }
+                else{
+                    Pair<String> x = new Pair(s[0],s[1]);
+                x.swap();
+                 System.out.println("'"+x.getF()+"'"+" "+"'"+x.getS()+"'");
+            }
+        }
+    }
+    }
